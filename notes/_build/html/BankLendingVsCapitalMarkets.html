@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The Changing Nature of Cross-Border Credit: Through the BIS API and the getBISy Package &#8212; The Evolution of Cross-Border Funding - View from the BIS Data API and getBISy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'BankLendingVsCapitalMarkets';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/LocalBankCredit_Paths.png" class="logo__image only-light" alt="The Evolution of Cross-Border Funding - View from the BIS Data API and getBISy - Home"/>
+    <script>document.write(`<img src="_static/LocalBankCredit_Paths.png" class="logo__image only-dark" alt="The Evolution of Cross-Border Funding - View from the BIS Data API and getBISy - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Bank Lending vs Capital Markets</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FBankLendingVsCapitalMarkets.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/BankLendingVsCapitalMarkets.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Changing Nature of Cross-Border Credit: Through the BIS API and the getBISy Package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-evolving-dimensions-of-cross-border-capital-flows-bank-lending">The Evolving Dimensions of Cross-Border Capital Flows: Bank Lending</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-evolving-dimensions-of-cross-border-capital-flows-international-debt-issuance">The Evolving Dimensions of Cross-Border Capital Flows: International Debt Issuance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-getbisy-python-package">The ‘getBISy’ Python package</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="the-changing-nature-of-cross-border-credit-through-the-bis-api-and-the-getbisy-package">
+<h1>The Changing Nature of Cross-Border Credit: Through the BIS API and the getBISy Package<a class="headerlink" href="#the-changing-nature-of-cross-border-credit-through-the-bis-api-and-the-getbisy-package" title="Link to this heading">#</a></h1>
+<p>It is well-known that cross-border capital flows can have destabilising consequences for local and global financial systems, illustrated through histories of financial crises in the 20th- and 21st -centuries.</p>
+<p>The Asian Financial Crisis 1997-98 showed that countries running even modest fiscal and current account deficits - and no twin deficits at all, in the case of Singapore - be destabilised by sudden capital outflows quite divorced from any perceptible fundamentals aside from a latent notion of global ‘risk-appetite’.</p>
+<p>Indeed, large volumes of capital inflows, whilst arising initially from seemingly imperceptible sources, lead to self-fulfilling circles of rising asset prices, and increased collateral values that fuel further borrowing and ultimately sow the seeds of a sudden reversal and a financial and currency crisis. This is at least partially the story of the Global Financial Crisis 2007-08 (‘GFC’).</p>
+<p>But if we suppose the term ‘cross-border lending’ fully encapsulates the anatomy of cross-border funding then we might miss an important story regarding the composition of this cross-border lending: namely, in the distinction between funding via cross-border bank lending (‘CBL’) and international debt securities (‘IDS’) issuance.</p>
+<p>Indeed, as BIS economists Torsten Ehlers, Bryan Hardy, and Patrick McGuire point out in an [article])(<a class="reference external" href="https://www.bis.org/publ/qtrpdf/r_qt2503f.htm">https://www.bis.org/publ/qtrpdf/r_qt2503f.htm</a>) from the first quarterly review this year (although they were by no means the first to make this point), cross-border capital flows in the pre-GFC period consisted of a particularly high proportion of bank lending. Now, however, the authors note, cross-border credit is increasingly a phenomenon of international debt issuance.</p>
+<p>I’d like to use this post as an opportunity to elaborate upon the key points of this research using a new Python package that I’ve recently published - <a class="reference external" href="https://pypi.org/project/getBISy/">getBISy</a>.</p>
+<section id="the-evolving-dimensions-of-cross-border-capital-flows-bank-lending">
+<h2>The Evolving Dimensions of Cross-Border Capital Flows: Bank Lending<a class="headerlink" href="#the-evolving-dimensions-of-cross-border-capital-flows-bank-lending" title="Link to this heading">#</a></h2>
+<p>After a rising rapidly from the turn of the millennium to the GFC 2007-08, total global cross-border credit was essentially flat up in the following decade up to the Covid-19 Pandemic of 2020, and growth since then has essentially flatlined in great contrast to the few years preceding the crisis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">getBISy.data</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">getBISy.enums</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">enums</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_global_liquidity_data</span><span class="p">(</span>
+    <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span>
+    <span class="n">currency</span><span class="o">=</span><span class="s1">&#39;TO1&#39;</span><span class="p">,</span>
+    <span class="n">borrowing_country</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Region</span><span class="o">.</span><span class="n">LiquidityAllCountries</span><span class="p">,</span>
+    <span class="n">borrowing_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">LiquidityAllSectors</span><span class="p">,</span>
+    <span class="n">lending_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">Banks</span><span class="p">,</span>
+    <span class="n">position_type</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">PositionType</span><span class="o">.</span><span class="n">CrossBorderAndLocal</span><span class="p">,</span>
+    <span class="n">instrument_type</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Instrument</span><span class="o">.</span><span class="n">All</span><span class="p">,</span>
+    <span class="n">unit_of_measure</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">UnitOfMeasure</span><span class="o">.</span><span class="n">PercentageOfGDP</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="International claims on all sectors" src="_images/AllSectorsLending.png" /></p>
+<p>At the same time, however, there are important regional differences not picked up in the preceding aggregate view.</p>
+<p>Take the example of the contrasting experiences of Developing Asia and Developed Europe. Whilst being essentially flat in the period up to the GFC, local credit extensions (that is, from local lenders to local borrowers) in Developing Asia began to rise consistently following the crisis, barely being interrupted by the Covid-19 pandemic. In fact, this rise seems to be almost a mirror image of the corresponding fall in the same metric for Developed Europe.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">getBISy.data</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">getBISy.enums</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">enums</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_global_liquidity_data</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span>
+                               <span class="n">currency</span><span class="o">=</span><span class="s1">&#39;TO1&#39;</span><span class="p">,</span>
+                               <span class="n">borrowing_country</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Region</span><span class="o">.</span><span class="n">DevelopingAsiaAndPacific</span><span class="p">,</span>
+                               <span class="n">borrowing_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">NonFinancialPrivateSector</span><span class="p">,</span>
+                               <span class="n">lending_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">Banks</span><span class="p">,</span>
+                               <span class="n">position_type</span><span class="o">=</span> <span class="n">enums</span><span class="o">.</span><span class="n">PositionType</span><span class="o">.</span><span class="n">Local</span><span class="p">,</span>
+                               <span class="n">instrument_type</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Instrument</span><span class="o">.</span><span class="n">Credit</span><span class="p">,</span>
+                               <span class="n">unit_of_measure</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">UnitOfMeasure</span><span class="o">.</span><span class="n">PercentageOfGDP</span>
+                               <span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_global_liquidity_data</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span>
+                               <span class="n">currency</span><span class="o">=</span><span class="s1">&#39;TO1&#39;</span><span class="p">,</span>
+                               <span class="n">borrowing_country</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Region</span><span class="o">.</span><span class="n">EuroArea</span><span class="p">,</span>
+                               <span class="n">borrowing_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">NonFinancialPrivateSector</span><span class="p">,</span>
+                               <span class="n">lending_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">Banks</span><span class="p">,</span>
+                               <span class="n">position_type</span><span class="o">=</span> <span class="n">enums</span><span class="o">.</span><span class="n">PositionType</span><span class="o">.</span><span class="n">Local</span><span class="p">,</span>
+                               <span class="n">instrument_type</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Instrument</span><span class="o">.</span><span class="n">Credit</span><span class="p">,</span>
+                               <span class="n">unit_of_measure</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">UnitOfMeasure</span><span class="o">.</span><span class="n">PercentageOfGDP</span>
+                               <span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="DivergingPathsOfLocalBankCredit" src="_images/LocalBankCredit_Paths.png" /></p>
+<p>A similar pattern is seen when viewing the direct counterpart of local bank lending: cross-border bank lending. The rise but subsequent stagnation of cross-border bank lending in Developed Europe following the GFC is well-known. But it was in fact at this point that cross-border bank lending to emerging Asia began to rise; indeed, the stagnation of such lending in Developed Europe can in some ways be viewed as having been at least partially compensated for by a rise in Developed Asia.</p>
+<p>But whilst cross-border bank lending in both regions gradually increased together in the decade following the financial crisis, there is some evidence now that the Covid-19 pandemic of 2020 might have marked a new structural break in these trends. In the past 5 years, cross-border bank lending has steadily increased for Developed Europe, but decreased for Developing Asia.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">getBISy.data</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">getBISy.enums</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">enums</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_locational_banking_data</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">LbsMeasure</span><span class="o">.</span><span class="n">Stocks</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Position</span><span class="o">.</span><span class="n">Claims</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Instrument</span><span class="o">.</span><span class="n">LoansAndDeposits</span><span class="p">,</span>
+                                        <span class="s1">&#39;USD&#39;</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">CurrencyType</span><span class="o">.</span><span class="n">All</span><span class="p">,</span>
+                                        <span class="s1">&#39;5J&#39;</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Institution</span><span class="o">.</span><span class="n">All</span><span class="p">,</span>
+                                        <span class="s1">&#39;5A&#39;</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">NonBanks</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Region</span><span class="o">.</span><span class="n">DevelopingAsiaAndPacific</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">PositionType</span><span class="o">.</span><span class="n">CrossBorder</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_locational_banking_data</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">LbsMeasure</span><span class="o">.</span><span class="n">Stocks</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Position</span><span class="o">.</span><span class="n">Claims</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Instrument</span><span class="o">.</span><span class="n">LoansAndDeposits</span><span class="p">,</span>
+                                        <span class="s1">&#39;USD&#39;</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">CurrencyType</span><span class="o">.</span><span class="n">All</span><span class="p">,</span>
+                                        <span class="s1">&#39;5J&#39;</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Institution</span><span class="o">.</span><span class="n">All</span><span class="p">,</span>
+                                        <span class="s1">&#39;5A&#39;</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">NonBanks</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">Region</span><span class="o">.</span><span class="n">EuropeanDevelopedCountries</span><span class="p">,</span>
+                                        <span class="n">enums</span><span class="o">.</span><span class="n">PositionType</span><span class="o">.</span><span class="n">CrossBorder</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Divergence in Cross-Border Credit" src="_images/CrossBorderCredit_Paths.png" /></p>
+</section>
+<section id="the-evolving-dimensions-of-cross-border-capital-flows-international-debt-issuance">
+<h2>The Evolving Dimensions of Cross-Border Capital Flows: International Debt Issuance<a class="headerlink" href="#the-evolving-dimensions-of-cross-border-capital-flows-international-debt-issuance" title="Link to this heading">#</a></h2>
+<p>The international funding model in the post-GFC period has instead been characterised international debt issuance, particularly of USD-denominated debt. This story is true in both all countries in the aggregate, but also when zoning on Emerging Market Economies (‘EMEs’) in particular.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">getBISy.data</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">getBISy.enums</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">enums</span>
+
+<span class="n">all_countries_debt_securities</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_global_liquidity_data</span><span class="p">(</span>
+    <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span>
+    <span class="n">currency</span><span class="o">=</span><span class="s1">&#39;USD&#39;</span><span class="p">,</span>
+    <span class="n">borrowing_country</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Region</span><span class="o">.</span><span class="n">AllCountries</span><span class="p">,</span>
+    <span class="n">borrowing_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">NonBanks</span><span class="p">,</span>
+    <span class="n">lending_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">LiquidityAllSectors</span><span class="p">,</span>
+    <span class="n">position_type</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">PositionType</span><span class="o">.</span><span class="n">CrossBorderAndLocal</span><span class="p">,</span>
+    <span class="n">instrument_type</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Instrument</span><span class="o">.</span><span class="n">Debt</span><span class="p">,</span>
+    <span class="n">unit_of_measure</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">UnitOfMeasure</span><span class="o">.</span><span class="n">USD</span>
+<span class="p">)</span>
+
+<span class="n">emerging_markets_debt_securities</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_global_liquidity_data</span><span class="p">(</span>
+    <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span>
+    <span class="n">currency</span><span class="o">=</span><span class="s1">&#39;USD&#39;</span><span class="p">,</span>
+    <span class="n">borrowing_country</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Region</span><span class="o">.</span><span class="n">EmergingAndDevelopingEconomies</span><span class="p">,</span>
+    <span class="n">borrowing_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">NonBanks</span><span class="p">,</span>
+    <span class="n">lending_sector</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Sector</span><span class="o">.</span><span class="n">LiquidityAllSectors</span><span class="p">,</span>
+    <span class="n">position_type</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">PositionType</span><span class="o">.</span><span class="n">CrossBorderAndLocal</span><span class="p">,</span>
+    <span class="n">instrument_type</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">Instrument</span><span class="o">.</span><span class="n">Debt</span><span class="p">,</span>
+    <span class="n">unit_of_measure</span><span class="o">=</span><span class="n">enums</span><span class="o">.</span><span class="n">UnitOfMeasure</span><span class="o">.</span><span class="n">USD</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="IncreasingdDebtIssuance" src="_images/AllCountriesEME_IDS.png" /></p>
+<p>An article in the BIS’s most recent <a class="reference external" href="https://www.bis.org/publ/qtrpdf/r_qt2509e.htm">Quarterly Review</a> pointed out there is an important difference between the private and government sectors in relation to the currency composition of international debt issuance. Whilst the denomination of private sector debt in EMEs tends still to be USD denominated, governments have tended to issue local currency debt. These can be viewed through the BIS Data Portal’s Debt Securities Statistics data.</p>
+<p>What are the consequences of this transition? For the EME private sector, the song remains the same: to the extent that these liabilities might remain unhedged a currency mismatch on their balance-sheets leaves them exposed to local currency depreciation.</p>
+<p>For EME governments who now increasingly have local-currency denominated (rather than USD denominated) liabilities, and local currency depreciation would no longer lead to the vicious circle of depreciation precipitating foreign capital outflows which beget further depreciation. That is to say, progress has been made in overcoming the ‘Original Sin’ highlighted by Eichengreen &amp; Hausmann in their <a class="reference external" href="https://www.nber.org/papers/w7418">seminal 1999 paper</a>.</p>
+<p>The negative consequences of exchange-rate depreciation has, however, now been shifted to creditors - posing a potential vicious circle from currency mismatch even for EME borrowers without foreign currency debt. Local currency depreciation manifests as mark-to-market losses on foreign lenders’ balance-sheets, triggering selloffs and ex post hedging that further drives down local asset prices including the currency.</p>
+</section>
+<section id="the-getbisy-python-package">
+<h2>The ‘getBISy’ Python package<a class="headerlink" href="#the-getbisy-python-package" title="Link to this heading">#</a></h2>
+<p>For researchers in international finance the <a class="reference external" href="https://stats.bis.org/api-doc/v2/">BIS Stats API</a> is an excellent source of data, providing access to a trove of unique datasets on international financial statistics underpinning some of the most interesting papers on these topics. Until now, however, I don’t believe there has existed a Python package that leverages this API to provide a more intuitive programmatic interface (this data can be easily, manually accessed through <a class="reference external" href="https://data.bis.org/">Data Portal website</a>) to this data.</p>
+<p>getBISy allows researchers and developers to obtain BIS data through intuitive Python functions, rather than having to work out the GET requests, or manually download the datasets on the website.</p>
+<p>As of today (15th September 2025), one can use the package to obtain data on 5 different topics in the Data Portal:
+- Policy Rates
+- Exchange Rates
+- Locational Banking Statistics
+- International Debt Securities
+- Global Liquidity</p>
+<p>This post has made use of data in the Locational Banking Statistics and Global Liquidity topics in particular, whilst an extension to the current library to support retrieving data on debt securities is currently in development.</p>
+<p>Until next time,
+Matt</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome to your Jupyter Book</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-evolving-dimensions-of-cross-border-capital-flows-bank-lending">The Evolving Dimensions of Cross-Border Capital Flows: Bank Lending</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-evolving-dimensions-of-cross-border-capital-flows-international-debt-issuance">The Evolving Dimensions of Cross-Border Capital Flows: International Debt Issuance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-getbisy-python-package">The ‘getBISy’ Python package</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matthew Potts
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
